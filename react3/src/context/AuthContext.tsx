@@ -59,10 +59,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         try {
 
-            const res = await fetch("https://blog-api-bzd2.onrender.com/api/auth/login", {
+            const res = await fetch("https://blog-api-bzd2.onrender.com/api/auth/validate", {
                 method: "GET",
                 headers: {
-                    "Content-type": "application.json",
+                    "Content-type": "application/json",
                     "Authorization": "Bearer " + token
                 }
             });
