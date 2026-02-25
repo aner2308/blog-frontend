@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import AddPost from "./pages/AddPost";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -15,7 +16,12 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addpost",
-                element: <AddPost />
+                element: (
+                    <ProtectedRoute>
+                        <AddPost />
+                    </ProtectedRoute>
+                )
+
             },
             {
                 path: "/login",
