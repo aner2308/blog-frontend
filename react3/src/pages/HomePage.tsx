@@ -1,12 +1,79 @@
-import React from 'react'
-import Header from '../components/Header'
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
-const HomePage = () => {
-  return (
-    <div>
-        <h1>Startsida</h1>
-    </div>
-  )
+interface Post {
+    _id: string;
+    title: string;
+    content: string;
+    createdAt: string;
 }
 
-export default HomePage
+const HomePage = () => {
+    const [posts, setPosts] = useState<Post[]>([]);
+    const { user } = useAuth();
+
+    const fetchPosts = async () => {
+        try {
+            const res = await fetch(
+                "https://blog-api-bzd2.onrender.com/api/posts"
+            );
+            const data = await res.json();
+            setPosts(data);
+        } catch (error) {
+            console.error("Kunde inte hämta posts");
+        }
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const handleDelete = async (id: string) => {
+        const token = localStorage.getItem("token");
+
+        await fetch(
+            `https://blog-api-bzd2.onrender.com/api/posts/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
+        );
+
+        //uppdatera listan
+        fetchPosts();
+    };
+
+    return (
+        <div>
+            <h1>Alla inlägg</h1>
+
+            {posts.map((post) => (
+                <div key={post._id}>
+                    <h2>{post.title}</h2>
+                    <p>{post.content}</p>
+                    <p>
+                        Publicerad:{" "}
+                        {new Date(post.createdAt).toLocaleDateString("sv-SE", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })}
+                    </p>
+
+                    {user && (
+                        <div>
+                            <button>Redigera</button>
+                            <button onClick={() => handleDelete(post._id)}>
+                                Radera
+                            </button>
+                        </div>
+                    )}
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default HomePage;
