@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import './HomePage.css'
 
 interface Post {
     _id: string;
@@ -8,6 +9,10 @@ interface Post {
     content: string;
     createdAt: string;
 }
+
+import HeaderL from "../assets/Header-L.jpg"
+import HeaderM from "../assets/Header-M.jpg"
+import HeaderS from "../assets/Header-S.jpg"
 
 const HomePage = () => {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -63,38 +68,46 @@ const HomePage = () => {
 
     return (
         <div>
-            <h1>Alla inlägg</h1>
+
+            <section className="hero">
+                <picture>
+                    <source media="(max-width: 600px)" srcSet={HeaderS} />
+                    <source media="(max-width: 900px)" srcSet={HeaderM} />
+                    <img src={HeaderL} alt="Headerbild" />
+                </picture>
+
+                <div className="hero-text">
+                    <h1>Välkommen till min blogg</h1>
+                </div>
+            </section>
 
             {posts.map((post) => (
-                <div key={post._id}>
+                <div className="homepage" key={post._id}>
+                    <div className="post-card">
+                        <h2>{post.title}</h2>
 
-                    <h2>{post.title}</h2>
+                        <p>
+                            <small>
+                                Publicerad:{" "}
+                                {new Date(post.createdAt).toLocaleDateString("sv-SE", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                })}
+                            </small>
+                        </p>
 
-                    <p>
-                        <small>
-                            Publicerad:{" "}
-                            {new Date(post.createdAt).toLocaleDateString("sv-SE", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                            })}
-                        </small>
-                    </p>
+                        <p>{post.content}</p>
 
-                    <p>{post.content}</p>
+                        <Link to={`/posts/${post._id}`}>Läs mer här...</Link>
 
-                    <Link to={`/posts/${post._id}`}><p>Läs mer här...</p></Link>
-
-                    {user && (
-                        <div>
-                            <button onClick={() => navigate(`/edit/${post._id}`)}>
-                                Redigera
-                            </button>
-                            <button onClick={() => handleDelete(post._id)}>
-                                Radera
-                            </button>
-                        </div>
-                    )}
+                        {user && (
+                            <div className="post-buttons">
+                                <button onClick={() => navigate(`/edit/${post._id}`)}>Redigera</button>
+                                <button onClick={() => handleDelete(post._id)}>Radera</button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             ))}
         </div>

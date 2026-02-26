@@ -1,0 +1,81 @@
+.login-page {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffeef5, #f0fff0);
+    font-family: 'Arial', sans-serif;
+    padding: 2rem;
+}
+
+.login-form {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-form h1 {
+    margin-bottom: 1.5rem;
+    color: #292929;
+}
+
+.login-form label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: 0.2s ease;
+    box-sizing: border-box;
+}
+
+.login-form input:focus {
+    border-color: #ffb6c1;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+}
+
+.login-form .error {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #dc2626;
+    font-weight: 500;
+}
+
+.login-form button {
+    margin-top: 1.5rem;
+    padding: 0.7rem 2rem;
+    background: linear-gradient(120deg, #ffb6c1, #98fb98);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.login-form button:hover {
+    background: linear-gradient(120deg, #f892fa, #a0ffb1);
+}
+
+/* För att ta bort standard stil på div error */
+.login-form div.error {
+    background: rgba(220, 38, 38, 0.05);
+    padding: 0.5rem;
+    border-radius: 8px;
+}

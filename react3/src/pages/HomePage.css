@@ -1,0 +1,93 @@
+.homepage {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.post-card {
+    background: #f8f8f8;
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.post-card h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #292929;
+}
+
+.post-card p {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+.post-card small {
+    color: #555;
+}
+
+.post-card a {
+    color: #ffb6c1;
+    text-decoration: underline;
+}
+
+.post-card a:hover {
+    color: #febbff;
+}
+
+.post-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.post-buttons button {
+    margin-top: 1.5rem;
+    padding: 0.7rem 2rem;
+    background: linear-gradient(120deg, #ffb6c1, #98fb98);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.post-buttons button:hover {
+    background: linear-gradient(120deg, #f892fa, #a0ffb1);
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero picture,
+.hero img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text ovanpå bilden */
+.hero-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 2rem 3rem;
+    border-radius: 20px;
+}

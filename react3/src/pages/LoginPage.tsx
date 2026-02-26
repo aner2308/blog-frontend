@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import "./LoginPage.css"
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
@@ -33,17 +34,11 @@ const LoginPage = () => {
     }
 
     return (
-        <div>
-            <h1>Logga in</h1>
+         <div className="login-page">
+            <form className="login-form" onSubmit={handleSubmit}>
+                <h1>Logga in</h1>
 
-            <form onSubmit={handleSubmit}>
-                {
-                    error && (
-                        <div>
-                            {error}
-                        </div>
-                    )
-                }
+                {error && <div className="error">{error}</div>}
 
                 <label htmlFor="username">Användarnamn:</label>
                 <input id="username" type="text" required value={username} onChange={(e) => setUsername(e.target.value)} />

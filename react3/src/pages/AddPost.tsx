@@ -68,36 +68,22 @@ const AddPost = () => {
     };
 
     return (
-        <div>
-            <h2>Välkommen {user?.username}!</h2>
+         <div className="addpost-page">
+            <form className="addpost-form" onSubmit={handleSubmit}>
+                <h2>Välkommen {user?.username}!</h2>
+                <h1>Skapa nytt inlägg</h1>
 
-            <h1>Skapa nytt inlägg</h1>
+                <label>Titel</label>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} />
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Titel</label>
-                    <input
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                </div>
-
-                <div>
-                    <label>Innehåll</label>
-                    <textarea
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                    />
-                </div>
+                <label>Innehåll</label>
+                <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={6} />
 
                 <button type="submit">Skapa inlägg</button>
 
-                {/* Visar felmeddelanden under formuläret */}
                 {errors.length > 0 && (
-                    <div style={{ color: "red", marginTop: "10px" }}>
-                        {errors.map((err, index) => (
-                            <p key={index}>{err}</p>
-                        ))}
+                    <div className="errors">
+                        {errors.map((err, index) => (<p key={index}>{err}</p>))}
                     </div>
                 )}
             </form>
