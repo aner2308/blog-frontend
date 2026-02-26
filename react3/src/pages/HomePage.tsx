@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 interface Post {
     _id: string;
@@ -51,16 +52,23 @@ const HomePage = () => {
 
             {posts.map((post) => (
                 <div key={post._id}>
+
                     <h2>{post.title}</h2>
-                    <p>{post.content}</p>
+
                     <p>
-                        Publicerad:{" "}
-                        {new Date(post.createdAt).toLocaleDateString("sv-SE", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        })}
+                        <small>
+                            Publicerad:{" "}
+                            {new Date(post.createdAt).toLocaleDateString("sv-SE", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            })}
+                        </small>
                     </p>
+
+                    <p>{post.content}</p>
+
+                    <Link to={`/posts/${post._id}`}><p>Läs mer här...</p></Link>
 
                     {user && (
                         <div>
