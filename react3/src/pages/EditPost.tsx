@@ -1,17 +1,40 @@
-import './AddPost.css'
-import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import './EditPost.css'
+import React from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../context/AuthContext'
 
-const AddPost = () => {
-    const { user } = useAuth();
+const EditPost = () => {
+
+    const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-
-    // array för alla fel
     const [errors, setErrors] = useState<string[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPost = async () => {
+
+            try {
+                const res = await fetch(
+                    `https://blog-api-bzd2.onrender.com/api/posts/${id}`
+                );
+                const data = await res.json();
+
+                setTitle(data.title);
+                setContent(data.content);
+                setLoading(false);
+            } catch (error) {
+                console.error("Kunde inte hämta posten");
+            }
+        };
+
+        fetchPost();
+    }, [id]);
+
     const validateForm = () => {
         const newErrors: string[] = [];
 
@@ -29,49 +52,47 @@ const AddPost = () => {
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        //Lägger in eventuella felmeddelanden i setErrors
         const validationErrors = validateForm();
         if (validationErrors.length > 0) {
             setErrors(validationErrors);
             return;
         }
 
-        // rensa fel
+        //Rensar felmeddelanden om de är lösta
         setErrors([]);
 
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(
-                "https://blog-api-bzd2.onrender.com/api/posts",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + token,
-                    },
-                    body: JSON.stringify({
-                        title: title.trim(),
-                        content: content.trim(),
-                    }),
-                }
-            );
+            const res = await fetch(`https://blog-api-bzd2.onrender.com/api/posts/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                },
+                body: JSON.stringify({
+                    title: title.trim(),
+                    content: content.trim(),
+                }),
+            });
 
             if (!res.ok) {
-                throw new Error("Kunde inte skapa post");
+                throw new Error("Kunde inte uppdatera posten");
             }
 
-            navigate("/");
-        } catch (err) {
-            setErrors(["Något gick fel vid skapandet av posten."]);
-            console.error(err);
+            navigate(`/posts/${id}`);
+
+        } catch (error) {
+            setErrors(["Något gick fel vid uppdateringen av inlägget.."])
         }
-    };
+    }
+
+    if (loading) return <p>Laddar...</p>;
 
     return (
         <div>
-            <h2>Välkommen {user?.username}!</h2>
-
-            <h1>Skapa nytt inlägg</h1>
+            <h1>Redigera inlägg</h1>
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -90,9 +111,8 @@ const AddPost = () => {
                     />
                 </div>
 
-                <button type="submit">Skapa inlägg</button>
+                <button type="submit">Spara ändringar</button>
 
-                {/* Visar felmeddelanden under formuläret */}
                 {errors.length > 0 && (
                     <div style={{ color: "red", marginTop: "10px" }}>
                         {errors.map((err, index) => (
@@ -103,6 +123,6 @@ const AddPost = () => {
             </form>
         </div>
     );
-};
+}
 
-export default AddPost;
+export default EditPost

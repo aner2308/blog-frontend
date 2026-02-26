@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SinglePostPage from "./pages/SinglePostPage";
+import EditPost from "./pages/EditPost";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,14 @@ const router = createBrowserRouter([
                 element: (
                     <ProtectedRoute>
                         <AddPost />
+                    </ProtectedRoute>
+                )
+            },
+            {
+                path: "/edit/:id",
+                element: (
+                    <ProtectedRoute>
+                        <EditPost />
                     </ProtectedRoute>
                 )
             },

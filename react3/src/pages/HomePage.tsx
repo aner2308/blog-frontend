@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Post {
     _id: string;
@@ -12,6 +12,8 @@ interface Post {
 const HomePage = () => {
     const [posts, setPosts] = useState<Post[]>([]);
     const { user } = useAuth();
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     const fetchPosts = async () => {
         try {
@@ -20,6 +22,8 @@ const HomePage = () => {
             );
             const data = await res.json();
             setPosts(data);
+            setLoading(false);
+
         } catch (error) {
             console.error("Kunde inte hämta posts");
         }
@@ -30,6 +34,15 @@ const HomePage = () => {
     }, []);
 
     const handleDelete = async (id: string) => {
+
+        //Ruta för att bekräfta radering
+        const confirmed = window.confirm(
+            "Är du säker på att du vill radera detta inlägg?"
+        );
+
+        if (!confirmed) return;
+
+        //Hämtar token från localStorage, och kör delete-routen
         const token = localStorage.getItem("token");
 
         await fetch(
@@ -42,9 +55,11 @@ const HomePage = () => {
             }
         );
 
-        //uppdatera listan
+        //uppdaterar listan
         fetchPosts();
     };
+
+    if (loading) return <p>Laddar...</p>;
 
     return (
         <div>
@@ -72,7 +87,9 @@ const HomePage = () => {
 
                     {user && (
                         <div>
-                            <button>Redigera</button>
+                            <button onClick={() => navigate(`/edit/${post._id}`)}>
+                                Redigera
+                            </button>
                             <button onClick={() => handleDelete(post._id)}>
                                 Radera
                             </button>
