@@ -1,3 +1,4 @@
+import "./SinglePostPage.css";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -33,6 +34,9 @@ const SinglePostPage = () => {
     }, [id]);
 
     const handleDelete = async () => {
+        const confirmed = window.confirm("Är du säker på att du vill radera inlägget?");
+        if (!confirmed) return;
+
         const token = localStorage.getItem("token");
 
         try {
@@ -46,9 +50,7 @@ const SinglePostPage = () => {
                 }
             );
 
-            if (!res.ok) {
-                throw new Error("Kunde inte radera");
-            }
+            if (!res.ok) throw new Error("Kunde inte radera");
 
             navigate("/");
         } catch (error) {
@@ -59,11 +61,11 @@ const SinglePostPage = () => {
     if (!post) return <p>Laddar...</p>;
 
     return (
-        <div>
-            <h1>{post.title}</h1>
+        <div className="singlepost-page">
+            <div className="singlepost-card">
+                <h1>{post.title}</h1>
 
-            <p>
-                <small>
+                <small className="singlepost-date">
                     Publicerad:{" "}
                     {new Date(post.createdAt).toLocaleDateString("sv-SE", {
                         year: "numeric",
@@ -71,23 +73,26 @@ const SinglePostPage = () => {
                         day: "numeric",
                     })}
                 </small>
-            </p>
 
-            <p>{post.content}</p>
-
-            <Link to={`/`}><p>Tillbaka</p></Link>
-
-            {user && (
-                <div>
-                    <button onClick={() => navigate(`/edit/${post._id}`)}>
-                        Redigera
-                    </button>
-
-                    <button onClick={handleDelete}>
-                        Radera
-                    </button>
+                <div className="singlepost-content">
+                    {post.content}
                 </div>
-            )}
+
+                <Link to="/" className="singlepost-back">
+                    ← Tillbaka
+                </Link>
+
+                {user && (
+                    <div className="singlepost-buttons">
+                        <button onClick={() => navigate(`/edit/${post._id}`)}>
+                            Redigera
+                        </button>
+                        <button onClick={handleDelete}>
+                            Radera
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

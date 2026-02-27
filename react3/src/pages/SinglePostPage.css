@@ -1,0 +1,71 @@
+main {
+    min-height: 80vh;
+}
+
+.singlepost-page {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #ffeef5, #f0fff0);
+    font-family: 'Arial', sans-serif;
+}
+
+.singlepost-card {
+    background: #f8f8f8;
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 700px;
+}
+
+.singlepost-card h1 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #292929;
+}
+
+.singlepost-date {
+    color: #666;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.singlepost-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.singlepost-back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: #ff9eb5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.singlepost-back:hover {
+    text-decoration: underline;
+}
+
+.singlepost-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.singlepost-buttons button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+    background: linear-gradient(120deg, #ffb6c1, #98fb98);
+    color: white;
+}
+
+.singlepost-buttons button:hover {
+    background: linear-gradient(120deg, #f892fa, #a0ffb1);
+}

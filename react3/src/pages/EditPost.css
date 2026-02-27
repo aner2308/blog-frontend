@@ -1,0 +1,78 @@
+.editpost-page {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(135deg, #ffeef5, #f0fff0);
+    font-family: 'Arial', sans-serif;
+    padding: 3rem 1rem;
+}
+
+.editpost-form {
+    background: #f8f8f8;
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+}
+
+.editpost-form h1 {
+    margin: 0 0 2rem 0;
+    font-size: 1.8rem;
+    color: #292929;
+    text-align: center;
+}
+
+.editpost-form label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.editpost-form input,
+.editpost-form textarea {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: 0.2s ease;
+    resize: vertical;
+}
+
+.editpost-form input:focus,
+.editpost-form textarea:focus {
+    border-color: #ffb6c1;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+}
+
+.editpost-form button {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.7rem 2rem;
+    background: linear-gradient(120deg, #ffb6c1, #98fb98);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.editpost-form button:hover {
+    background: linear-gradient(120deg, #f892fa, #a0ffb1);
+}
+
+.editpost-form .errors {
+    margin-top: 1rem;
+    color: #dc2626;
+    font-weight: 500;
+    background: rgba(220, 38, 38, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
