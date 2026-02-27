@@ -11,12 +11,14 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
+    //Sparar inloggad användare i state
     const [user, setUser] = useState<User | null>(null);
 
-    //Logga in användare
+    //Tar emot användarens inloggningsuppgifter
     const login = async (credentials: LoginCredentials) => {
 
         try {
+            //POST för inloggning
             const res = await fetch("https://blog-api-bzd2.onrender.com/api/auth/login", {
                 method: "POST",
                 headers: {
@@ -29,8 +31,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 throw new Error("Inloggningen misslyckades");
             }
 
+            //Tolkar svar som AuthRespons
             const data = await res.json() as AuthResponse;
 
+            //Sparar JWT i localstorage
             localStorage.setItem("token", data.token);
             setUser(data.user);
 
@@ -53,12 +57,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const checkToken = async () => {
         const token = localStorage.getItem("token");
 
+        //Avbryter om token saknas
         if(!token) {
             return;
         }
 
         try {
-
+            //Skickar token till backend för validering
             const res = await fetch("https://blog-api-bzd2.onrender.com/api/auth/validate", {
                 method: "GET",
                 headers: {
@@ -67,6 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 }
             });
 
+            //Om ok, uppdateras user state
             if(res.ok) {
                 const data = await res.json();
                 setUser(data.user);
@@ -74,17 +80,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 
         } catch(error) {
-
+            //Vid fel tas token bort
             localStorage.removeItem("token")
             setUser(null);
 
         }
     }
 
+    //Håller användaren inloggad vid siduppdatering
     useEffect(() => {
         checkToken();
     }, [])
 
+    //Gör user, login oh logout tillgängliga globalt i hela appen
     return (
         <AuthContext.Provider value={{ user, login, logout }}>
             {children}
@@ -92,6 +100,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     )
 }
 
+//Hook som förenklar användningen av AuthProvider
 export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
 

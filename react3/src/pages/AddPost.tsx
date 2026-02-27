@@ -15,6 +15,7 @@ const AddPost = () => {
     const validateForm = () => {
         const newErrors: string[] = [];
 
+        //Kontroll av input fält
         if (title.trim().length < 3) {
             newErrors.push("Titeln måste vara minst 3 tecken.");
         }
@@ -26,9 +27,11 @@ const AddPost = () => {
         return newErrors;
     };
 
+    //Hanterare av skickandet av formulär
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        //Kontrollerar om valideringsfel finns
         const validationErrors = validateForm();
         if (validationErrors.length > 0) {
             setErrors(validationErrors);
@@ -38,8 +41,10 @@ const AddPost = () => {
         // rensa fel
         setErrors([]);
 
+        //Hämtar token från localStorage
         const token = localStorage.getItem("token");
 
+        //Gör POST med giltigt token
         try {
             const res = await fetch(
                 "https://blog-api-bzd2.onrender.com/api/posts",
@@ -56,17 +61,22 @@ const AddPost = () => {
                 }
             );
 
+            //Felmeddelande vid misslyckande
             if (!res.ok) {
                 throw new Error("Kunde inte skapa post");
             }
 
+            //Lyckas post skickas man till startsidan
             navigate("/");
         } catch (err) {
+            
+            //Felmeddelande
             setErrors(["Något gick fel vid skapandet av posten."]);
             console.error(err);
         }
     };
 
+    //Formulärets utseende
     return (
          <div className="addpost-page">
             <form className="addpost-form" onSubmit={handleSubmit}>

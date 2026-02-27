@@ -6,6 +6,7 @@ const Header = () => {
 
     const { user, logout } = useAuth();
 
+    //Nav-meny
     return (
         <header>
             <div className="logo">Bloggie</div>
@@ -16,6 +17,7 @@ const Header = () => {
                     <li><NavLink to="/addpost">Skapa inlägg</NavLink></li>
                     <li>
                         {
+                            //Logga in knapp som byts till logga ut om man är inloggad
                             !user ? <NavLink to="/login">Logga in</NavLink> : <button onClick={logout} >Logga ut</button>
 
                         }

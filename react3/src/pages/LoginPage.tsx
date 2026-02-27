@@ -18,6 +18,7 @@ const LoginPage = () => {
         }
     }, [user])
 
+    //Hanterar inskick av inloggningsformulär
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         
         e.preventDefault();
@@ -25,6 +26,7 @@ const LoginPage = () => {
 
         try {
 
+            //Om inloggning lyckas skickas användaren till addpost
             await login({ username, password });
             navigate("/addpost");
 
@@ -33,6 +35,7 @@ const LoginPage = () => {
         }
     }
 
+    //Utseende av inloggningsformulär
     return (
          <div className="login-page">
             <form className="login-form" onSubmit={handleSubmit}>

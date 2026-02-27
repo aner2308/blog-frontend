@@ -11,6 +11,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
     const { user } = useAuth();
 
+    //Om person ej är inloggad skickas man till login-sidan
     if (!user) {
         return <Navigate to="/login" replace />
     }

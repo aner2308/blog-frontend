@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import SinglePostPage from "./pages/SinglePostPage";
 import EditPost from "./pages/EditPost";
 
+//Routing på min sida
 const router = createBrowserRouter([
     {
         path: "/",

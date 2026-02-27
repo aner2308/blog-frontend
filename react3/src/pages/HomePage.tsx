@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import './HomePage.css'
 
+//Interface för poster
 interface Post {
     _id: string;
     title: string;
@@ -10,6 +11,7 @@ interface Post {
     createdAt: string;
 }
 
+//Bilder för hero-banner
 import HeaderL from "../assets/Header-L.jpg"
 import HeaderM from "../assets/Header-M.jpg"
 import HeaderS from "../assets/Header-S.jpg"
@@ -20,6 +22,7 @@ const HomePage = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    //Hämtar in poster
     const fetchPosts = async () => {
         try {
             const res = await fetch(
@@ -64,6 +67,7 @@ const HomePage = () => {
         fetchPosts();
     };
 
+    //Inladdningsmeddelande
     if (loading) return <p>Laddar...</p>;
 
     return (
