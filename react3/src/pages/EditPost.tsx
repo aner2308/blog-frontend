@@ -1,14 +1,11 @@
 import './EditPost.css'
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-
 
 //Redigera befintlig post
 const EditPost = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { user } = useAuth();
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
